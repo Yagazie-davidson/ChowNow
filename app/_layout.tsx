@@ -1,39 +1,55 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar, StyleSheet } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+export { ErrorBoundary } from "expo-router";
+export const unstable_settings = {
+  initialRouteName: "(app)",
+};
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
+// SplashScreen.preventAutoHideAsync();
+// // Set the animation options. This is optional.
+// SplashScreen.setOptions({
+//   duration: 100,
+//   fade: true,
+// });
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+    <Providers>
+      <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="onboarding" />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </Providers>
+    // <Stack />
   );
 }
+
+function Providers({ children }: { children: React.ReactNode }) {
+  // const theme = useThemeConfig();
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <GestureHandlerRootView
+          style={styles.container}
+          // className={theme.dark ? `dark` : undefined}
+        >
+          {/* <ThemeProvider value={theme}> */}
+          {/* <BottomSheetModalProvider> */}
+          {children}
+          {/* </BottomSheetModalProvider> */}
+          {/* </ThemeProvider> */}
+        </GestureHandlerRootView>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+});

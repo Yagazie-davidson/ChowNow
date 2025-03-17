@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fashora",
-    "slug": "fashora",
+    "name": "ChowNow",
+    "slug": "ChowNow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,7 +9,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": {
+        "dark": "./assets/images/splash/DarkCN.png",
+        "light": "./assets/images/splash/LightCN.png",
+        "tinted": "./assets/images/splash/TintedCN.png"
+      },
+      "bundleIdentifier": "com.letamletam.chownow",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -27,15 +36,33 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash/splash-icon-lightCN.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F97216",
+          "dark": {
+            "image": "./assets/images/splash/splash-icon-darkCN.png",
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/DMSans.ttf"]
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ef891668-0bd2-467c-8f74-5b376a69c94c"
+      }
     }
   }
 }
